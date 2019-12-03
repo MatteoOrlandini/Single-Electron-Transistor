@@ -3,8 +3,8 @@
 % Matlab le linee di codice per ciascuno dei test riportati sotto
 
 clc
-%clear all
-close all
+clear all
+%close all
 
 %%% test 1
 %%%%%%%%
