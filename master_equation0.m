@@ -1,4 +1,4 @@
-function y=master_equation(V,Vg,N);
+function y=master_equation0(V,Vg,N);
 
 clear ma;
 for i=-N:1:N
