@@ -79,7 +79,7 @@ figure ('Name','numero di cariche arrivate al drain al variare del tempo, avendo
 plot(curd(:,10));
 xlabel ('Tempo');
 ylabel ('Cariche arrivate al drain');
-%%% numero di cariche uscite dal sourse al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5
+%%% numero di cariche uscite dal source al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5
 figure ('Name','numero di cariche uscite dal source al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5','NumberTitle','off');
 plot(curs(:,10))
 xlabel ('Tempo');
