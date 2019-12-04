@@ -33,11 +33,11 @@ for iv=1:NV     % loop start for drain voltage
     Nmax=20;     % maximum number of N (charge number in dot)
     for ne=1:Nmax-Nmin  % loop start for N
         n=Nmin+ne;   % N charge number in dot
-        %Calculation of ?? in equations (25a) and (25b)
-        dF1p=q/ctotal*(0.5*q+(n*q-q0)-(c2+cg)*V(iv)+cg*Vg);
-        dF1n=q/ctotal*(0.5*q-(n*q-q0)+(c2+cg)*V(iv)-cg*Vg);
-        dF2p=q/ctotal*(0.5*q-(n*q-q0)-c1*V(iv)-cg*Vg);
-        dF2n=q/ctotal*(0.5*q+(n*q-q0)+c1*V(iv)+cg*Vg);
+        %Calculation of deltaE
+        dE1p=q/ctotal*(0.5*q+(n*q-q0)-(c2+cg)*V(iv)+cg*Vg);
+        dE1n=q/ctotal*(0.5*q-(n*q-q0)+(c2+cg)*V(iv)-cg*Vg);
+        dE2p=q/ctotal*(0.5*q-(n*q-q0)-c1*V(iv)-cg*Vg);
+        dE2n=q/ctotal*(0.5*q+(n*q-q0)+c1*V(iv)+cg*Vg);
         % Noted that loop end for N is located after calculation of \Gamma
         
         %4. the values of ?F are identified and then used for the calculation of \Gamma. If ?F is negative,
@@ -45,30 +45,30 @@ for iv=1:NV     % loop start for drain voltage
         % be closed to the zero (very small). Note that the value of \Gamm ais always positive. These
         % identifications are done for four conditiond of ?F.
         
-        if dF1p<0
-            T1p(ne)=1/(r1*q*q)*(-dF1p)/(1-exp(dF1p/(kb*temp)));
+        if dE1p<0
+            T1p(ne)=1/(r1*q*q)*(-dE1p)/(1-exp(dE1p/(kb*temp)));
             % ? positive in equation (26a)
         else
             T1p(ne)=1e-1; % ? positive is assumed to be very small
         end
-        if dF1n<0
-            T1n(ne)=1/(r1*q*q)*(-dF1n)/(1-exp(dF1n/(kb*temp)));
+        if dE1n<0
+            T1n(ne)=1/(r1*q*q)*(-dE1n)/(1-exp(dE1n/(kb*temp)));
             % ? negative in equation (26a)
         else
-            T1n(ne)=1e-1; % ? negative is assumed to be very small
+            T1n(ne)=1e-1; % if negative is assumed to be very small
         end
-        if dF2p<0
-            T2p(ne)=1/(r2*q*q)*(-dF2p)/(1-exp(dF2p/(kb*temp)));
-            % ? positive in equation (26b)
+        if dE2p<0
+            T2p(ne)=1/(r2*q*q)*(-dE2p)/(1-exp(dE2p/(kb*temp)));
+            %  positive in equation (26b)
         else
-            T2p(ne)=1e-1; % ? positive is assumed to be very small
+            T2p(ne)=1e-1; % if positive is assumed to be very small
         end
         
-        if dF2n<0
-            T2n(ne)=1/(r2*q*q)*(-dF2n)/(1-exp(dF2n/(kb*temp)));
+        if dE2n<0
+            T2n(ne)=1/(r2*q*q)*(-dE2n)/(1-exp(dE2n/(kb*temp)));
             % ? negative in equation (26b)
         else
-            T2n(ne)=1e-1; % ? negative is assumed to be very small
+            T2n(ne)=1e-1; % if negative is assumed to be very small
             
         end
     end % loop end for N
@@ -107,14 +107,23 @@ for iv=1:NV     % loop start for drain voltage
     end
     I(iv)=q*sumI; % I in equation (32b)
 end % end of drain voltage loop
-figure('Name','plot of I vs V','NumberTitle','off');
+figure('Name','plot of I vs V_d','NumberTitle','off');
 plot(V,I); % plot of I vs V
-xlabel ('Drain voltage V');
-ylabel ('Current I');
+xlabel ('Drain voltage V_d');
+ylabel ('Drain current I_d');
 for iv=1:NV-1
     dIdV(iv)=(I(iv+1)-I(iv))/dV; % calculation of dI/dV
 end
-figure('Name','plot of dI/dV vs V','NumberTitle','off');
+figure('Name','plot of dI/dV vs V_d','NumberTitle','off');
 plot(V(1,1:NV-1),dIdV);
-xlabel ('Drain voltage V');
+xlabel ('Drain voltage V_d');
 ylabel ('dI/dV');
+%Vd vs Vg
+e = q;
+Vg = (-10:0.01:10);
+for i = 1:1000
+    Vd = (q0 + cg*Vg - e/2)/(ctotal-c1);
+end
+figure;
+plot(Vg, Vd);
+grid on;
