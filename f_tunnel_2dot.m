@@ -9,7 +9,7 @@ Cs = 0.8;
 Cdot = 0.8;
 C = Cg+Cd+Cs+Cdot;
 
-V1 = ((-n*e+Cg*Vg)*(C+Cdot)+Cdot*Cd*Vd)/(C^2-Cdot^2);
+V1 = ((-n*e+Cg*Vg)*(C+Cdot) + Cdot*Cd*Vd)/(C^2-Cdot^2);
 V2 = (-n*e+Cdot*V1+Cd*Vd+Cg*Vg)/C;
 
 %notazione: dE_inizio_fine

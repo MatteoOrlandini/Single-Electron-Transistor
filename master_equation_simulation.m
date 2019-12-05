@@ -11,7 +11,6 @@ kb=1.381e-23;   % Boltzman constant (J/K)
 % Definition of Device parameters
 c1=1.0e-20;     % tunnel capacitor C1 (F)
 c2=2.1e-19;     % tunnel capacitor C2 (F)
-%cg=1.0e-18;     % gate capacitor Cg (F)
 cg=1.0e-18;     % gate capacitor Cg (F)
 ctotal=c1+c2+cg;    % total capacitance (F)
 mega=1000000;   % definition of mega=106
@@ -132,7 +131,6 @@ for i = 1:length(Vg)
     Vcbn = q/(2*c2) - (Vg * cg)/c2; %Vcb negative slope
 end
 Vx = (q/2)/(2*cg);  %punti in cui le rette intersecano l'asse x
-basevalue = 0;
 numeroFasciRette = 4;
 legendString=[];
 figure('Name','Coulomb Blockade','NumberTitle','off');
