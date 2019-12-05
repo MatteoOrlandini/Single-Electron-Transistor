@@ -1,18 +1,17 @@
 % calcolo probabilità di tunneling per transistor con 2 dot
 
 function y = f_tunnel_2dot(j,n1,n2,Vd,Vg)
-%definizione delle costanti 
-e = 1.602*10^(-19);    % electronic charge (C)
-atto = 10^(-18);    
-Cg = 1 * atto;          %gate capacitor (F)
-Cd = 0.01 * atto;       %drain capacitor (F)
-Cs = 0.1 * atto;        %source capacitor (F)
-Cdot = 1 * atto;        %dot capacitor (dot1-dot2) (F)
-Ctot = Cg+Cd+Cs+Cdot; %total capacitance (F)
-temp = 10; % temperature
-kb = 1.381*10^(-23);   % Boltzman constant (J/K)
+
+e = 1;
+Cg = 0.8;
+Cd = 0.8;
+Cs = 0.8;
+Cdot = 0.8;
+Ctot = Cg+Cd+Cs+Cdot;
+temp = 10; %temperature
+kb=1.381e-23;   % Boltzman constant (J/K)
 mega = 10^6;     
-r = 25*mega; % tunnel resistance R1 (Ohm)
+r=25*mega; % tunnel resistance R1 (Ohm)
 
 V1 = (-n1*e*Ctot+Cg*Vg*Ctot+Cdot*(-n2*e+Cg*Vg)+Cdot*Cd*Vd)/(Ctot^2-Cdot^2); %tensione dot 1
 V2 = (-n2*e+Cdot*V1+Cd*Vd+Cg*Vg)/Ctot; %tensione dot 2
@@ -29,5 +28,7 @@ dE = [dE_s_dot1, dE_dot1_s, dE_dot1_dot2, dE_dot2_dot1, dE_dot2_d, dE_d_dot2];
 
 %provvisorio 
 %y = [0.001*dE(1)/(exp(5*dE(1)-1)),0.001*dE(2)/(exp(5*dE(2)-1)),0.001*dE(3)/(exp(5*dE(3)-1)),0.001*dE(4)/(exp(5*dE(4)-1)),0.001*dE(5)/(exp(5*dE(5)-1)),0.001*dE(6)/(exp(5*dE(6)-1))];
-%
-y = 1/(r*e^2)*(-dE(j))/(1-exp(dE(j)/(kb*temp)));
+
+
+
+y = 1/(r*e^2)*dE(j)/(1-exp(dE(j)/(kb*temp)));

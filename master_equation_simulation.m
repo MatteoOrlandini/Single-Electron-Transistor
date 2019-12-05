@@ -27,7 +27,7 @@ vmax=0.5;   % drain voltage maximum Vmax (V)
 NV=1000;    % number of grid from Vmin to Vmax
 dV=(vmax-vmin)/NV;  % drain voltage increment of each grid point
 for iv=1:NV     % loop start for drain voltage
-    V(iv)=vmin+iv*dV;   % drain voltage in each grid point
+    Vd(iv)=vmin+iv*dV;   % drain voltage in each grid point
     % Note that loop end for drain voltage is located in the end of this program source
     
     %3. Calculation of ?F, as follows:
@@ -36,10 +36,10 @@ for iv=1:NV     % loop start for drain voltage
     for ne=1:Nmax-Nmin  % loop start for N
         n=Nmin+ne;   % N charge number in dot
         %Calculation of deltaE
-        dE1p=q/ctotal*(0.5*q+(n*q-q0)-(c2+cg)*V(iv)+cg*Vg);
-        dE1n=q/ctotal*(0.5*q-(n*q-q0)+(c2+cg)*V(iv)-cg*Vg);
-        dE2p=q/ctotal*(0.5*q-(n*q-q0)-c1*V(iv)-cg*Vg);
-        dE2n=q/ctotal*(0.5*q+(n*q-q0)+c1*V(iv)+cg*Vg);
+        dE1p=q/ctotal*(0.5*q+(n*q-q0)-(c2+cg)*Vd(iv)+cg*Vg);
+        dE1n=q/ctotal*(0.5*q-(n*q-q0)+(c2+cg)*Vd(iv)-cg*Vg);
+        dE2p=q/ctotal*(0.5*q-(n*q-q0)-c1*Vd(iv)-cg*Vg);
+        dE2n=q/ctotal*(0.5*q+(n*q-q0)+c1*Vd(iv)+cg*Vg);
         % Noted that loop end for N is located after calculation of \Gamma
         
         %4. the values of ?F are identified and then used for the calculation of \Gamma. If ?F is negative,
@@ -110,47 +110,50 @@ for iv=1:NV     % loop start for drain voltage
     I(iv)=q*sumI; % I in equation (32b)
 end % end of drain voltage loop
 figure('Name','plot of I vs V_d','NumberTitle','off');
-plot(V,I); % plot of I vs V
+plot(Vd,I); % plot of I vs V
 xlabel ('Drain voltage V_d');
 ylabel ('Drain current I_d');
 for iv=1:NV-1
     dIdV(iv)=(I(iv+1)-I(iv))/dV; % calculation of dI/dV
 end
 figure('Name','plot of dI/dV vs V_d','NumberTitle','off');
-plot(V(1,1:NV-1),dIdV);
+plot(Vd(1,1:NV-1),dIdV);
 xlabel ('Drain voltage V_d');
 ylabel ('dI/dV');
 %Coulomb Blockade Plot : Vd vs Vg
 %deltaVd = e/cg;
-deltaVcbp = (q/2)/(cg + c1); %usato per il fascio di rette con slope positivo da plottare
-deltaVcbn = q/(2*c2); %usato per il fascio di rette con slope negativo da plottare
+deltaVcbp = q/(cg + c1); %usato per il fascio di rette con slope positivo da plottare
+deltaVcbn = q/c2; %usato per il fascio di rette con slope negativo da plottare
 Vg_min = -0.5;
 Vg = (Vg_min : 0.01 : -Vg_min);
 for i = 1:length(Vg)
-    Vcbp = ((q/2) + Vg *cg)/(cg+c2); %Vcb positive slope
-    Vcbn = q/(2*c2) - (Vg * cg)/c2; %Vcb negative slope
+    Vcbp = ((q/2) + Vg *cg)/(cg+c1); %Vcb positive slope
+    Vcbn = q/(2*c2) - (Vg*cg)/c2; %Vcb negative slope
 end
-Vx = (q/2)/(2*cg);  %punti in cui le rette intersecano l'asse x
+deltax = q/cg;
+deltay = (2*q)/ctotal;
 numeroFasciRette = 4;
-legendString=[];
 figure('Name','Coulomb Blockade','NumberTitle','off');
 for i = -numeroFasciRette/2 : numeroFasciRette/2
     plot (Vg, Vcbp + i*deltaVcbp);
     %area(Vg, Vd1 + i*deltaVg, max(Vd1 + (i-1)*deltaVg)); %plots Y versus X and fills the area between 0 and Y. The values in X can be numeric, datetime, duration or categorical values. 
     hold on;
     plot (Vg, Vcbn + i*deltaVcbn);
+    hold on;
     % Identificazione dei rombi
-    %%%%%%%%%%%%%% le rette si toccano per Vg = (e/2-q0)/cg &&&&&&&&&&&&&
-    %pgon = polyshape([-q/c1 -Vx q/c1 Vx],[-q/ctotal 0 q/ctotal 0]);
-    %plot(pgon);
-    
-    %tmp=find(Vd1 < (q0 + cg * i * Vx - e/2)/(ctotal-c1));
-    %patch([Vg(tmp)],[Vd1(tmp)],ones(length(tmp),1),'facecolor','r')
-    
-    %tmp=find(y1 < 0);
-    %patch([x(tmp)],[y1(tmp)],ones(length(tmp),1),'facecolor','r')
+    pgon = polyshape([-q/(2*cg)+i*deltax ((cg+c1)*q/ctotal-q/2)/cg+i*deltax q/(2*cg)+i*deltax  -(((cg+c1)*q/ctotal-q/2)/cg)+i*deltax],...
+    [0  q/ctotal   0  -q/ctotal]);
+    plot(pgon);
 end
 grid on;
 xlabel ('Gate voltage V_g');
 ylabel ('Coulomb Blockade voltage V_{Cb}');
 hold off;
+%N vs Vg
+for n = Nmin:Nmax
+    vg (n+Nmax+1) = q/cg*(n+1/2);
+end
+figure('Name','Electrons in dot vs. Vg','NumberTitle','off');
+scatter (vg, Nmin:Nmax);
+xlabel ('Gate voltage V_g');
+ylabel ('Number of electrons stored in the dot');
