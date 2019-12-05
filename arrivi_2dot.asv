@@ -1,0 +1,66 @@
+%%% Metodo Montecarlo %%%
+
+%N: numero di elettroni presenti nel dot
+%Vd: tensione di drain
+%Vg: tensione di gate
+
+function [time,q1,q2,s,d] = arrivi(N,Vd,Vg);
+
+tempo = zeros(N,1);
+%q1 = elettroni del primo quantum dot
+q1 = zeros(N,1);
+%q2 = elettroni del secondo quantum dot
+q2 = zeros(N,1);
+%s = elettroni nel source
+s = zeros(N,1);
+%d = elettroni nel drain
+d = zeros(N,1);
+%N sono le iterazioni del metodo montecarlo (di solito 1000)
+for i = 1:N
+    for j = 1:6
+        %r(j) è un numero casuale
+        r(j) = rand(1,1);
+        %t(j) è una matrice che contiene il tempo
+        t(j) = -log(r(j))/f_tunnel_2dot(j,q1(i),q2(i),Vd,Vg);
+    end;
+    %k = tempo minimo, h = indice del tempo minimo da cui si capisce la
+    %gamma minima
+    [k,h] = min(t);
+    tempo(i) = k;
+    %se h = 1, è il caso in cui un elettrone va dal source al dot: il
+    %source perde un elettrone, il dot acquista un elettrone, 
+    %il drain rimane uguale
+    if h == 1
+        s(i+1) = s(i)-1;
+        q1(i+1) = q1(i)+1;
+        q2(i+1) = q2(i);
+        d(i+1) = d(i);
+    %se h = 2, è il caso in cui un elettrone va dal dot1
+    %al source: il drain perde un elettrone, il dot ne acquista uno e il
+    %source rimane uguale
+    else if h == length(t)
+            d(i+1) = d(i)-1;
+            q(i+1) = q(i)+1;
+            s(i+1) = s(i);
+        %se h = 2, è il caso in cui un elettrone va dal dot al source: il
+        %source acquista un elettrone, il dot perde un elettrone, 
+        %il drain rimane uguale
+        else if h == 2
+                s(i+1) = s(i)+1;
+                q(i+1) = q(i)-1;
+                d(i+1) = d(i);
+            %il caso rimanente (h == 3) è quello in cui in cui un elettrone
+            %va dal dot al drain: il source rimane uguale, il dot perde un 
+            %elettrone, il drain acquista un elettrone
+            else
+                d(i+1) = d(i)+1;
+                q(i+1) = q(i)-1;  
+                s(i+1) = s(i);
+            end;
+        end;
+    end;
+end;
+
+
+
+
