@@ -18,7 +18,7 @@ figure ('Name','plot dei 4 tipi di gamma(n) per n che va da -10 a 10','NumberTit
 plot(-n:n, y(:,1), -n:n, y(:,2), -n:n, y(:,3), -n:n, y(:,4));
 xlabel ('Numero di cariche nel dot (n)');
 ylabel ('Rate di tunneling (\Gamma_n)');
-legend ('\Gamma_{source->dot}', '\Gamma_{dot->source}', '\Gamma_{dot->drain}', '\Gamma_{drain->dot}')
+legend ('\Gamma_{source \rightarrow dot}', '\Gamma_{dot \rightarrow source}', '\Gamma_{dot \rightarrow drain}', '\Gamma_{drain \rightarrow dot}')
 
 %%% test 2
 %%%%%%%%%
@@ -28,17 +28,17 @@ for i = 1:50
     corrente(i) = master_equation0(exp(0.04*i)-1, 0.5, 10); 
 end; 
 xlabel ('Tensione di drain (V)');
-ylabel ('p(n)*[(\Gamma_{dot->R})(N) - (\Gamma_{R->dot})(N)]');
+ylabel ('p(n)*[(\Gamma_{dot \rightarrow R})(N) - (\Gamma_{R \rightarrow dot})(N)]');
 %legend (num2str(exp(0.04*[1:50])));
 hold off; 
 
 %plot del termine [p(n)*(\Gamma_dot->R)(N) - (\Gamma_R->dot)(N)] al variare di Vg
-figure('Name','plot del termine [p(n)*(\Gamma_{dot->R})(N) - (\Gamma_{R->dot})(N)] al variare di Vg','NumberTitle','off');
+figure('Name','plot del termine [p(n)*(\Gamma_{dot \rightarrow R})(N) - (\Gamma_{R \rightarrow dot})(N)] al variare di Vg','NumberTitle','off');
 for i=1:50 
     corrente(i)=master_equation0(0.1, exp(0.04*i)-1, 10); 
 end; 
 xlabel ('Tensione di gate (Vg)');
-ylabel ('p(n)*(\Gamma_{dot->R})(N) - (\Gamma_{R->dot})(N)');
+ylabel ('p(n)*(\Gamma_{dot \rightarrow R})(N) - (\Gamma_{R \rightarrow dot})(N)');
 hold off; 
 
 %%% test 3

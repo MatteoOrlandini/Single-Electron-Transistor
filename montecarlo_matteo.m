@@ -7,7 +7,7 @@ N2 = -n:n;
 for k = 1:6
     for i = 1:(2*n+1)
         for j = 1:(2*n+1)
-            F(i,j,k) = f_tunnel_2dot(k,i-n,j-n,1,0);
+            F(i,j,k) = f_tunnel_matteo(k,i-n,j-n,1,0);
         end
     end
 end
