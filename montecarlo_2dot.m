@@ -4,14 +4,14 @@ y = [];
 n = 10;
 N1 = -n:n;
 N2 = -n:n;
-for k = 1:6
-    for i = 1:(2*n+1)
+for k = 1:6 %k : gamma k-esimo
+    for i = 1:(2*n+1) 
         for j = 1:(2*n+1)
-            F(i,j,k) = f_tunnel_2dot(k,i-n,j-n,1,0);
+            F(i,j,k) = f_tunnel_2dot(k,i-(n+1),j-(n+1),1,0.8);
         end
     end
 end
-
+figure; plot(N1,F(n+1,:,1),N1,F(n+1,:,2),N1,F(n+1,:,5),N1,F(n+1,:,6));
 figure; surf(N1,N2,F(:,:,1),'FaceAlpha',0.5);
 hold on; surf(N1,N2,F(:,:,2),'FaceAlpha',0.5);
 hold on; surf(N1,N2,F(:,:,3),'FaceAlpha',0.5);
