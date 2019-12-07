@@ -136,7 +136,6 @@ numeroFasciRette = 4;
 figure('Name','Coulomb Blockade','NumberTitle','off');
 for i = -numeroFasciRette/2 : numeroFasciRette/2
     plot (Vg, Vcbp + i*deltaVcbp);
-    %area(Vg, Vd1 + i*deltaVg, max(Vd1 + (i-1)*deltaVg)); %plots Y versus X and fills the area between 0 and Y. The values in X can be numeric, datetime, duration or categorical values. 
     hold on;
     plot (Vg, Vcbn + i*deltaVcbn);
     hold on;
@@ -145,15 +144,21 @@ for i = -numeroFasciRette/2 : numeroFasciRette/2
     [0  q/ctotal   0  -q/ctotal]);
     plot(pgon);
 end
-grid on;
 xlabel ('Gate voltage V_g');
+%xlim([min(Vg)  max(Vg)]);
 ylabel ('Coulomb Blockade voltage V_{Cb}');
+%ylim([min(Vcbn+numeroFasciRette/2*deltaVcbn)   max(Vcbp+numeroFasciRette/2*deltaVcbp)]);
+grid on;
 hold off;
 %N vs Vg
+clear Vg
 for n = Nmin:Nmax
-    vg (n+Nmax+1) = q/cg*(n+1/2);
+    Vg (n+Nmax+1) = q/cg*(n+1/2);
 end
 figure('Name','Electrons in dot vs. Vg','NumberTitle','off');
-scatter (vg, Nmin:Nmax);
+stairs (Vg, Nmin:Nmax);
 xlabel ('Gate voltage V_g');
+xlim([min(Vg)  max(Vg)]);
 ylabel ('Number of electrons stored in the dot');
+ylim([Nmin  Nmax]);
+grid on;

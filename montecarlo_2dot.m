@@ -1,7 +1,7 @@
 clear all; close all;
 
-Vd = 2;
-Vg = 2;
+Vd = 1;
+Vg = 1;
 y = [];
 n = 10;
 N1 = -n:n;
@@ -40,3 +40,4 @@ hold on; surf(N1,N2,F(:,:,6),'FaceAlpha',0.5);
 xlabel('Number of electron stored in first dot (N1)');
 ylabel('Number of electron stored in second dot (N2)');
 zlabel('Tunneling rate (\Gamma)');
+colorbar;
