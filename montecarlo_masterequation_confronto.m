@@ -108,7 +108,7 @@ clear curs;
 clear car; 
 for i = 1:50 
     [tempo,q,s,d] = arrivi(N,0.4,exp(0.04*i)-1); 
-    curd(:,i) = d(:,1); 
+    curd(:,i) = d(:); 
     curs(:,i) = s(:,1); 
     t(:,i) = tempo(:,1); 
     car(:,i) = q(:,1); 

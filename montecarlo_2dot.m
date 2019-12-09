@@ -41,3 +41,26 @@ xlabel('Number of electron stored in first dot (N1)');
 ylabel('Number of electron stored in second dot (N2)');
 zlabel('Tunneling rate (\Gamma)');
 colorbar;
+%%%%%%%%%%% Id vs Vd
+N=10000;
+clear t; 
+clear curd; 
+clear curs; 
+clear car; 
+for i = 1:50 
+    [tempo,q1,q2,s,d] = arrivi_2dot(N, i*0.5, 3); 
+    curd(:,i) = d(:); 
+    curs(:,i) = s(:); 
+    t(:,i) = tempo(:); 
+    ele1(:,i) = q1(:);
+    ele2(:,i) = q2(:);
+end
+%%% numero di cariche arrivate al drain al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5
+figure ('Name','numero di cariche arrivate al drain al variare del tempo','NumberTitle','off');
+plot(curd(:,50));
+xlabel ('Tempo');
+ylabel ('Cariche arrivate al drain');
+%%% numero di cariche uscite dal source al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5
+figure ('Name','numero di cariche uscite dal source al variare del tempo','NumberTitle','off');
+plot(curs(:,50))
+xlabel ('Tempo');

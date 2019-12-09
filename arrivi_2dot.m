@@ -4,9 +4,9 @@
 %Vd: tensione di drain
 %Vg: tensione di gate
 
-function [time,q1,q2,s,d] = arrivi(N,Vd,Vg);
+function [time,q1,q2,s,d] = arrivi_2dot(N,Vd,Vg)
 
-tempo = zeros(N,1);
+time = zeros(N,1);
 %q1 = elettroni del primo quantum dot
 q1 = zeros(N,1);
 %q2 = elettroni del secondo quantum dot
@@ -26,7 +26,7 @@ for i = 1:N
     %k = tempo minimo, h = indice del tempo minimo da cui si capisce la
     %gamma minima
     [k,h] = min(t);
-    tempo(i) = k;
+    time(i) = k;
     %se h = 1, è il caso in cui un elettrone va dal source al dot1: il
     %source perde un elettrone, il dot1 acquista un elettrone,
     %il drain e il dot2 rimangono uguali
