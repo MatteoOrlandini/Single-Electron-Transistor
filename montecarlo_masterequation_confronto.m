@@ -14,10 +14,10 @@ for i = -n : n
     y = [y; f_tunnel0(1,i,1,0)];
 end;
 %%% plot dei 4 tipi di gamma(n) per n che va da -10 a 10
-figure ('Name','plot dei 4 tipi di gamma(n) per n che va da -10 a 10','NumberTitle','off');
+figure ('Name', 'plot dei 4 tipi di gamma(n) per n che va da -10 a 10', 'NumberTitle', 'off');
 plot(-n:n, y(:,1), -n:n, y(:,2), -n:n, y(:,3), -n:n, y(:,4));
-xlabel ('Numero di cariche nel dot (n)');
-ylabel ('Rate di tunneling (\Gamma_n)');
+xlabel ('Number of charge stored into the dot (n)', 'Interpreter', 'latex');
+ylabel ('Tunneling rate $\Gamma_n$', 'Interpreter', 'latex');
 legend ('\Gamma_{source \rightarrow dot}', '\Gamma_{dot \rightarrow source}', '\Gamma_{dot \rightarrow drain}', '\Gamma_{drain \rightarrow dot}')
 
 %%% test 2
@@ -27,8 +27,8 @@ figure('Name','plot del termine [p(n)*(\Gamma_{dot->R})(N) - (\Gamma_{R->dot})(N
 for i = 1:50
     corrente(i) = master_equation0(exp(0.04*i)-1, 0.5, 10); 
 end; 
-xlabel ('Tensione di drain (V)');
-ylabel ('p(n)*[(\Gamma_{dot \rightarrow R})(N) - (\Gamma_{R \rightarrow dot})(N)]');
+xlabel ('Drain voltage ($V_d$)', 'Interpreter', 'latex');
+ylabel ('$p(n) \cdot [\Gamma_{dot \rightarrow R}(N) - \Gamma_{R \rightarrow dot}(N)]$', 'Interpreter', 'latex');
 %legend (num2str(exp(0.04*[1:50])));
 hold off; 
 
@@ -37,8 +37,8 @@ figure('Name','plot del termine [p(n)*(\Gamma_{dot \rightarrow R})(N) - (\Gamma_
 for i=1:50 
     corrente(i)=master_equation0(0.1, exp(0.04*i)-1, 10); 
 end; 
-xlabel ('Tensione di gate (Vg)');
-ylabel ('p(n)*(\Gamma_{dot \rightarrow R})(N) - (\Gamma_{R \rightarrow dot})(N)');
+xlabel ('Gate voltate ($V_g$)', 'Interpreter', 'latex');
+ylabel ('$p(n) \cdot [\Gamma_{dot \rightarrow R}(N) - \Gamma_{R \rightarrow dot}(N)]$', 'Interpreter', 'latex');
 hold off; 
 
 %%% test 3
@@ -62,8 +62,8 @@ end;
 %%%% plot della corrente di drain (curd) al variare di V, avendo fissato Vg=0.5, confronto col risultato master equation
 figure ('Name','plot della corrente di drain (curd) al variare di V, avendo fissato Vg=0.5, confronto col risultato master equation','NumberTitle','off');
 plot(exp(0.04*[1:50])-1, (curd(length(curd),:))./sum(t(:,:)), exp(0.04*[1:50])-1, corrente);
-xlabel ('Tensione di drain (V)');
-ylabel ('Corrente di drain (curd)');
+xlabel ('Drain voltage ($V_d$)', 'Interpreter', 'latex');
+ylabel ('Drain current ($I_d$)', 'Interpreter', 'latex');
 legend ('Monte Carlo', 'Master Equations');
 clear  corr_parz; 
 for i = 1:N 
@@ -72,23 +72,23 @@ end;
 %%%% plot della corrente di drain (curd), al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5
 figure ('Name','plot della corrente di drain (curd), al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5','NumberTitle','off');
 plot(corr_parz);
-xlabel ('Tempo');
-ylabel ('Corrente di drain (curd)');
+xlabel ('Time');
+ylabel ('Drain current ($I_d$)', 'Interpreter', 'latex');
 %%% numero di cariche arrivate al drain al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5
 figure ('Name','numero di cariche arrivate al drain al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5','NumberTitle','off');
 plot(curd(:,10));
-xlabel ('Tempo');
-ylabel ('Cariche arrivate al drain');
+xlabel ('Time');
+ylabel ('Charges arrived at the drain');
 %%% numero di cariche uscite dal source al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5
 figure ('Name','numero di cariche uscite dal source al variare del tempo, avendo fissato V=exp(0.04*10) e Vg=0.5','NumberTitle','off');
 plot(curs(:,10))
-xlabel ('Tempo');
-ylabel ('Cariche uscite dal source');
+xlabel ('Time');
+ylabel ('Charges that left the drain');
 %%% somma algebrica del numero di cariche di cui ai due punti precedenti
 figure ('Name','somma algebrica del numero di cariche arrivate al drain e uscite dal source','NumberTitle','off');
 plot(curs(:,10)+curd(:,10))
-xlabel ('Tempo');
-ylabel ('Cariche uscite dal source');
+xlabel ('Time');
+ylabel ('Charges that left the source');
 %%% media temporale della somma algebrica di cui al punto precedente
 mean(curd(:,10)+curs(:,10))
 %%% media temporale della carica nel dot, sempre avendo fissato V=exp(0.04*10) e Vg=0.5
@@ -116,8 +116,8 @@ end;
 %%%% plot della corrente di drain (curd) al variare di Vg, avendo fissato V=0.4, confronto col risultato master equation
 figure ('Name','plot della corrente di drain (curd) al variare di Vg, avendo fissato V=0.4, confronto col risultato master equation','NumberTitle','off');
 plot(exp(0.04*[1:50])-1, (curd(length(curd),:))./sum(t(:,:)), exp(0.04*[1:50])-1, corrente);
-xlabel ('Tensione di gate (Vg)');
-ylabel ('Corrente di drain (curd)');
+xlabel ('Gate voltage ($V_g$)', 'Interpreter', 'latex');
+ylabel ('Drain current ($I_d$)', 'Interpreter', 'latex');
 legend ('Monte Carlo', 'Master Equations');
 for i = 1:N 
     corr_parz(i) = curd(i,10)/sum(t(1:i,10));
@@ -126,8 +126,8 @@ end;
 % %%%% plot della corrente di drain (curd), al variare del tempo, avendo fissato Vg=exp(0.04*10) e V=0.4
 figure ('Name','plot della corrente di drain (curd), al variare del tempo, avendo fissato Vg=exp(0.04*10) e V=0.4','NumberTitle','off');
 plot(corr_parz)  
-xlabel ('Tempo');
-ylabel ('Corrente di drain (curd)');
+xlabel ('Time');
+ylabel ('Drain current ($I_d$)', 'Interpreter', 'latex');
 
 %%% test 5
 %%%%%%%%%
@@ -157,6 +157,6 @@ hold on;
 %%% confronto risultati Montecarlo e Master equations 
 surf(exp(0.04*[1:20])-1, exp(0.04*[1:50])-1, curd); 
 hold off; 
-figure('Name','carica immagazzinata nel Dot, al variar di V e Vg','NumberTitle','off');
+figure('Name','carica immagazzinata nel Dot, al variare di V e Vg','NumberTitle','off');
 %carica immagazzinata nel Dot, al variar di V e Vg
 surf(exp(0.04*[1:20])-1, exp(0.04*[1:50])-1, car);
