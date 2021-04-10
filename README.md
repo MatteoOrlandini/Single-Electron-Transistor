@@ -20,7 +20,7 @@ For more information type:
 ## How to run
 Open Matlab and run [SET_characteristics.m](https://github.com/MatteoOrlandini/SET-Simulation/blob/master/SET_characteristics.m) to see some characteristics of a single electron transitor or run [montecarlo_masterequation_comparison.m](https://github.com/MatteoOrlandini/SET-Simulation/blob/master/montecarlo_masterequation_comparison.m) to see the comparison between Monte Carlo and Master Equation method to calculate current in a SET.
 
-There is also a GUI (SET_characteristics_app.mlapp)[https://github.com/MatteoOrlandini/SET-Simulation/blob/master/SET_characteristics_app.mlapp] made up to easy understand the SET characteristics.
+There is also a GUI [SET_characteristics_app.mlapp](https://github.com/MatteoOrlandini/SET-Simulation/blob/master/SET_characteristics_app.mlapp) made up to easy understand the SET characteristics.
 
 Application design
 
