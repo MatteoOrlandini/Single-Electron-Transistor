@@ -113,6 +113,7 @@ figure('Name','plot of I vs V_d','NumberTitle','off');
 plot(Vd,I); % plot of I vs V
 xlabel ('Drain voltage $V_d$', 'Interpreter', 'latex');
 ylabel ('Drain current $I_d$', 'Interpreter', 'latex');
+title ("Drain current, V_g = " + Vg + " V");
 for iv=1:NV-1
     dIdV(iv)=(I(iv+1)-I(iv))/dV; % calculation of dI/dV
 end
@@ -120,6 +121,7 @@ figure('Name','plot of dI/dV vs V_d','NumberTitle','off');
 plot(Vd(1,1:NV-1),dIdV);
 xlabel ('Drain voltage $V_d$', 'Interpreter', 'latex');
 ylabel ('$dI/dV$', 'Interpreter', 'latex');
+title ("$dI/dV$, $V_g$ = " + Vg + " V", 'Interpreter', 'latex');
 %Coulomb Blockade Plot : Vd vs Vg
 %deltaVd = e/cg;
 deltaVcbp = q/(cg + c1); %usato per il fascio di rette con slope positivo da plottare
@@ -148,12 +150,13 @@ xlabel ('Gate voltage $V_g$', 'Interpreter', 'latex');
 %xlim([min(Vg)  max(Vg)]);
 ylabel ('Coulomb Blockade voltage $V_{Cb}$', 'Interpreter', 'latex');
 %ylim([min(Vcbn+numeroFasciRette/2*deltaVcbn)   max(Vcbp+numeroFasciRette/2*deltaVcbp)]);
+title("Coulomb blockade");
 grid on;
 hold off;
 %N vs Vg
 clear Vg
 for n = Nmin:Nmax
-    Vg (n+Nmax+1) = q/cg*(n+1/2);
+    Vg(n+Nmax+1) = q/cg*(n+1/2);
 end
 figure('Name','Electrons in dot vs. Vg','NumberTitle','off');
 stairs (Vg, Nmin:Nmax);
@@ -161,4 +164,5 @@ xlabel ('Gate voltage $V_g$', 'Interpreter', 'latex');
 xlim([min(Vg)  max(Vg)]);
 ylabel ('Number of electrons stored into the dot', 'Interpreter', 'latex');
 ylim([Nmin  Nmax]);
+title("Number of electrons stored into the dot");
 grid on;

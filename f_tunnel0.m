@@ -1,17 +1,22 @@
-function y=f_tunnel0(j,n,V,Vg)
+function tunneling_rate = f_tunnel0(n, Vd, Vg)
+%f_tunnel0 computes the tunneling rate 
+%   tunneling_rate = f_tunnel0(n, Vd, Vg) stores the tunneling_rate  in a 
+%   matrix for n electrons, drain voltage Vd and gate voltage Vg.
+%   The first column of tunneling_rate is the tunneling rate from dot to 
+%   source, the second column is from source to dot, the third column is 
+%   from dot to drain and the fourth is from drain to dot
 
+cg = 0.8; % gate capacitance
+cd = 0.8; % drain capacitance
+cs = 0.8; % source capacitance
+c = cg+cd+cs; % total capacitance
+% computing differential energies
+differentialEnergy1 = -(-n+cg*Vg+cd*Vd)/c+5/c;    % from dot to source
+differentialEnergy2 = (-n+cg*Vg+cd*Vd)/c+5/c;     % from source to dot
+differentialEnergy3 = -Vd+(-n+cg*Vg+cd*Vd)/c+5/c; % from dot to drain
+differentialEnergy4 = +Vd-(-n+cg*Vg+cd*Vd)/c+5/c; % from drain to dot
 
-%%% n è il numero di cariche (elettroni) nel DOT (da -10 a 10 negli esempi)
-%%% l'uscita è data dai 4 tipi di ?(n), infatti j va da 1 a 4, rispettivamente 1) da DOt a Source, 2) da Source a Dot, 3) da dot a Drain, 4) da Drain a Dot 
-
-cg=0.8;cd=0.8;cs=0.8;
-c=cg+cd+cs;
-dE1=-(-n+cg*Vg+cd*V)/c+5/c;
-dE2=(-n+cg*Vg+cd*V)/c+5/c;
-dE3=-V+(-n+cg*Vg+cd*V)/c+5/c;
-dE4=+V-(-n+cg*Vg+cd*V)/c+5/c;
-
-f=0.001*[dE1/(exp(5*dE1)-1),dE2/(exp(5*dE2)-1),dE3/(exp(5*dE3)-1),dE4/(exp(5*dE4)-1)];
-
-
-y=f; 
+tunneling_rate = 0.001*[differentialEnergy1/(exp(5*differentialEnergy1)-1)...
+    differentialEnergy2/(exp(5*differentialEnergy2)-1)...
+    differentialEnergy3/(exp(5*differentialEnergy3)-1)...
+    differentialEnergy4/(exp(5*differentialEnergy4)-1)];
